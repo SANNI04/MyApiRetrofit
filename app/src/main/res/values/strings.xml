@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MyApiRetrofit</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Ordenes">Orden Editada con exito</string>
+    <string name="OrdenesError">No se puede editar, verifique que no falte ningun dato obligatorio</string>
+    <string name="Repuestos">Agregados con exito</string>
+    <string name="RepuestosError">No es posible agregar los repuestos</string>
+    <string name="Error">Error</string>
+    <string name="detalle">Detalle guardado con exito</string>
+    <string name="detalleError">Error,algo salio mal</string>
+</resources>

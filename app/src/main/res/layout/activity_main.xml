@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:padding="4dp"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:id="@+id/parent_scroll">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="382dp"
+            android:layout_height="69dp"
+            android:layout_marginLeft="0dp"
+            android:background="#FA9808"
+            android:backgroundTint="#FF9800"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:paddingRight="50dp"
+            android:text="Ordenes de Trabajo"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <Button
+            android:id="@+id/btnAgregar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="#FFC107"
+            android:text="Agregar Orden"
+            android:textColor="#020202" />
+
+        <SearchView
+            android:id="@+id/txtBuscar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bordered_button"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myOrdenesList"
+            android:layout_width="match_parent"
+            android:layout_height="650dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"
+            android:background="#D7EAEAE0"
+            android:paddingTop="10dp"
+            android:paddingBottom="8dp"
+            tools:listitem="@layout/item_rv_orden" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+

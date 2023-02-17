@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/etFirma"
+                android:layout_width="match_parent"
+                android:layout_height="158dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
+                android:background="#7CFFFCE6"
+                android:hint="Firma"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="48dp"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:textSize="12sp">
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnLimpiar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:minHeight="48dp"
+                android:text=" Remover firma"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginTop="15dp"
+                android:background="#F4EBEB"
+                android:gravity="center"
+                android:text="Ingrese los campos acontinuación:"
+                android:textColor="#090909"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1BFFEB3B"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/etCodigo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Codigo Orden Trabajo"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etTipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Tipo Orden"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etOrden"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Cliente"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etSucursal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Sucursal"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etPersona"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Persona Encargada"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etTecnico"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Tecnico"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etObservaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Observaciones"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etFecha_ot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Fecha Orden Trabajo"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Equipo"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etMarca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Marca"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado equipo"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etHoraI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Hora Inicio"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etHoraF"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Hora Finalizacion"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etVoltaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Voltaje"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etAmperaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Amperaje"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etClavija"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Clavija"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etModelo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Modelo"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etSerie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Serie"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/FirmaC"
+                    android:layout_width="match_parent"
+                    android:layout_height="145dp"
+                    android:padding="5dp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>

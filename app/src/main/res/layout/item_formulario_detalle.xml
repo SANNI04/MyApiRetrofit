@@ -1,0 +1,1076 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="#F8EBEB"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_marginTop="15dp"
+        android:background="#1BFFC107"
+        android:gravity="center"
+        android:text="Ingrese los campos acontinuación:"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="772dp"
+        android:background="#FAD3D3"
+        android:backgroundTint="#F8F0F0">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="484dp">
+
+            <LinearLayout
+                android:id="@+id/Repuesto1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+
+                <TextView
+                    android:id="@+id/Registro1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="#FFEB3B"
+                    android:gravity="center"
+                    android:text="Bastidos/Estructura"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+
+                <EditText
+                    android:id="@+id/etEstadoChasis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado chasis"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstadoCubiertas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado cubiertas"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etPintura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Pintura"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etGolpes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Golpes"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etTornillos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Tornillos"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etAsientos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Asientos"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+
+                <TextView
+                    android:id="@+id/Repuesto2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#FFEB3B"
+                    android:gravity="center"
+                    android:text="Marcha"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etEstadoMotores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado Motores"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstadoEscobillas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado Escobillas"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etNivelAceiteTransm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Nivel Aceite Transm"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstadoTransmision"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado Transmision"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etFugas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Fugas"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+
+                <TextView
+                    android:id="@+id/Repuesto3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFEB3B"
+                    android:gravity="center"
+                    android:text="Freno"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etEstadoDeFrenos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado de Frenos"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstadoDeBandas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado de Bandas"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etFuncionamiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Funcionamiento"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etNivelDeLiquido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Nivel de Liquido"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etAjusteFrenos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Ajuste de frenos"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etPruebaFrenado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Prueba de Frenado"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/Repuesto4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFEB3B"
+                    android:gravity="center"
+                    android:text="Dirección"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etEstadoDelMotor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado del Motor"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstadoCadena"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado Cadena"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstadoPiston"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado Piston"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etNivelDeAceite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Nivel de Aceite"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etLubricacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Lubricacion"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEscobillas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Escobillas"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEjeDeDireccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Eje de Direccion"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etFuncionamiento1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Funcionamiento"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/Repuesto5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFEB3B"
+                    android:gravity="center"
+                    android:text="Instalación Electrica"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etFusibles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Fusibles"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etControladores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Controladores"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstadoDeCables"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado de Cables"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etFuncionamiento2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Funcionamiento"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etIndicadorODisplay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Indicador o Display"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etMultipilotoOJoystick"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Multipiloto o Joystick"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstadoContactos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado Contactos"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etContactor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Contactor"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etOtros"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Otros"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/Repuesto6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFEB3B"
+                    android:gravity="center"
+                    android:text="Mastil"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etFugas1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Fugas"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstadoMangueras"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado Mangueras"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstadoPoleas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado Poleas"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etElongacionCadenas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Elongacion Cadenas"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstadoCilindros"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado Cilindros"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etBloqueValvulas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Bloque Valvulas"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etFuncionamiento3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Funcionamiento"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etPiezasDeslizantes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Piezas Deslizantes"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etLubricacionEspejo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Lubricacion Espejo"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstadosHorquillas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estados Horquillas"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/Repuesto7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFEB3B"
+                    android:gravity="center"
+                    android:text="Hidraulica"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etEstadoDeFiltros"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado de Filtros"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etFugas2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Fugas"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etNivelDeAceite1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Nivel de Aceite"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etTanqueODeposito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Tanque o Deposito"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etFuncionamiento4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Funcionamiento"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etMotorDeElevacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Motor de Elevacion"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEscobillas1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Escobillas"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/Repuesto8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFEB3B"
+                    android:gravity="center"
+                    android:text="Bateria"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etEstadoInterconectores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado Interconectores"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEstadoTornillos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Estado Tornillos"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etVoltaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Voltaje"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etCaidaVoltaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Caida de Voltaje"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etCubiertas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Cubiertas"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etPostes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Postes"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etSulfatacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Sulfatacion"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etNivelElectrolito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Nivel Electrolito"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/Repuesto9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFEB3B"
+                    android:gravity="center"
+                    android:text="Accesorios"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etExploradoras"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Exploradoras"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etLuzGiratoria"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Luz Giratoria"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etCinturon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Cinturon"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etExtintor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Extintor"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etCargador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Cargador"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/Repuesto10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFEB3B"
+                    android:gravity="center"
+                    android:text="Ruedas"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etRuedaMotriz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Rueda Motriz"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etRuedasDeApoyo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Ruedas de Apoyo"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etRuedasDeDireccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Ruedas de Direccion"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="25dp"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etRuedasDeCarga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints=""
+                    android:hint="Ruedas de Carga"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="20dp"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
