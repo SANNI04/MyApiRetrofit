@@ -9,4 +9,6 @@
     <string name="Error">Error</string>
     <string name="detalle">Detalle guardado con exito</string>
     <string name="detalleError">Error,algo salio mal</string>
+    <string name="tipo_orden">Tipo Orden</string>
+
 </resources>

@@ -76,24 +76,31 @@
                     android:hint="Codigo Orden Trabajo"
                     android:inputType="text"
                     android:maxLines="1"
-                    android:padding="25dp"
+                    android:padding="20dp"
                     android:textSize="12sp" />
 
-                <EditText
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tipo Orden Trabajo" />
+
+                <Spinner
                     android:id="@+id/etTipo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="8dp"
                     android:autofillHints=""
-                    android:hint="Tipo Orden"
+                    android:contentDescription="@string/tipo_orden"
+                    android:hint="@string/tipo_orden"
                     android:inputType="text"
                     android:maxLines="1"
                     android:minHeight="48dp"
-                    android:padding="20dp"
+                    android:padding="25dp"
                     android:textSize="12sp" />
 
-                <EditText
+                <Spinner
                     android:id="@+id/etOrden"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -104,7 +111,7 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:textSize="12dp" />
 
                 <EditText
                     android:id="@+id/etSucursal"

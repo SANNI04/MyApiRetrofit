@@ -76,6 +76,11 @@ interface WebService {
     @GET("ApiRestImaq/clientes/read")
     suspend fun  obtenerClientes(): Response<ClientesResponse>
 
+    @GET("ApiRestImaq/clientes/read")
+    suspend fun  obtenerSucursales(): Response<SucursalesResponse>
+
+    @GET("ApiRestImaq/clientes/read")
+    suspend fun  obtenerTecnicos(): Response<TecnicosResponse>
 
 }
 

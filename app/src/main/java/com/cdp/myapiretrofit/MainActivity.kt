@@ -1,25 +1,25 @@
 package com.cdp.myapiretrofit
 
 import android.Manifest
+import android.content.Context
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.SearchView
-import android.widget.Toast
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cdp.myapiretrofit.adaptadorRecycler.OrdenesAdapter
 import com.cdp.myapiretrofit.capturaFirma.CaptureBitmapView
+import com.cdp.myapiretrofit.clases.Clientes
 import com.cdp.myapiretrofit.clases.Ordenes
 import com.cdp.myapiretrofit.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +27,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
+
 
 class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
@@ -44,11 +46,21 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     private val TAG = "MainActivity()"
 
+
+    lateinit var tipos: Spinner
+
+
     lateinit var txtBuscar:SearchView
 
     companion object {
         val instance = MainActivity()
     }
+
+
+    lateinit var cliente: Spinner
+    var listaClientes = arrayListOf<Clientes>()
+    //var listaClientes: List<Clientes> = emptyList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +94,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         txtBuscar.setOnQueryTextListener(this)
 
+        obtenerClientes()
 
     }
 
@@ -111,8 +124,47 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         //variables que guardan el valor de cada celda del formulario
 
         val codigoField: EditText = subView.findViewById(R.id.etCodigo)
-        val tipoField: EditText = subView.findViewById(R.id.etTipo)
-        val cliField: EditText = subView.findViewById(R.id.etOrden)
+
+        tipos = subView.findViewById(R.id.etTipo) as Spinner
+
+        val adapter =
+            ArrayAdapter.createFromResource(this, R.array.tipos, android.R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.preference_category)
+        tipos.adapter = adapter
+
+        var tipoField:String? = null
+
+        tipos.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                tipoField = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+        cliente = subView.findViewById(R.id.etOrden) as Spinner
+
+        cliente.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaClientes.map { it.nombre_cliente })
+        adapter.setDropDownViewResource(android.R.layout.preference_category)
+        var cliField:String? = null
+
+        cliente.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                cliField = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                TODO("Not yet implemented")
+            }
+        }
+
         val sucField: EditText = subView.findViewById(R.id.etSucursal)
         val perField: EditText = subView.findViewById(R.id.etPersona)
         val tecField: EditText = subView.findViewById(R.id.etTecnico)
@@ -146,8 +198,8 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             //guarda en cada atributo de la clase ordenes lo que exista en el campo
 
             this.ordenes.codigo_orden_trabajo = codigoField.text.toString()
-            this.ordenes.tipo_orden_trabajo = tipoField.text.toString()
-            this.ordenes.cliente = cliField.text.toString()
+            this.ordenes.tipo_orden_trabajo = tipoField.toString()
+            this.ordenes.cliente = cliField.toString()
             this.ordenes.sucursal = sucField.text.toString()
             this.ordenes.persona_encargada = perField.text.toString()
             this.ordenes.tecnico = tecField.text.toString()
@@ -317,6 +369,20 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         }
     }
 
+  fun obtenerClientes(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = RetrofitClient.webService.obtenerClientes()
+            runOnUiThread{
+                if(call.isSuccessful){
+                    listaClientes = call.body()!!.listaClientes
+                }else{
+                    Toast.makeText(this@MainActivity, "Error consultar todos", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
     //Limpiamos el objeto
 
     fun limpiarObjeto(){
@@ -351,4 +417,17 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         adaptador.filtrado(s)
         return false
     }
+
+
+    /*fun crearAdaptador(contexto: Context, datos: List<String>): ArrayAdapter<String> {
+        val adaptador = object : ArrayAdapter<String>(contexto, android.R.layout.simple_spinner_item, datos) {
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val vista = super.getDropDownView(position, convertView, parent)
+                // Personalizar la vista de cada elemento del menú desplegable aquí si es necesario
+                return vista
+            }
+        }
+        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        return adaptador
+    }*/
 }

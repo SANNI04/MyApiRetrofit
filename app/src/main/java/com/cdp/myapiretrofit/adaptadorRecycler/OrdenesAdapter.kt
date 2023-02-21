@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.cdp.myapiretrofit.R
 import com.cdp.myapiretrofit.RetrofitClient
 import com.cdp.myapiretrofit.capturaFirma.CaptureBitmapView
+import com.cdp.myapiretrofit.clases.Clientes
 import com.cdp.myapiretrofit.clases.Detalles
 import com.cdp.myapiretrofit.clases.Ordenes
 import com.cdp.myapiretrofit.clases.Repuestos
@@ -76,6 +77,12 @@ class OrdenesAdapter(
         "","","","","","","","","",
         "","","","","","","","","")
 
+    lateinit var tipos: Spinner
+
+    lateinit var clientes: Spinner
+
+    var listaClientes = arrayListOf<Clientes>()
+
     //creamos ahora un viewholder ques una vista determinada para cada orden de la lista(lo que lleva dentro esa vista)
     //La llamamos y la mostramos
 
@@ -83,7 +90,6 @@ class OrdenesAdapter(
         val vista =
             LayoutInflater.from(parent.context).inflate(R.layout.item_rv_orden, parent, false)
         return OrdenesViewHolder(vista)
-
     }
 
     //Ahora este metodo agarra la vista que esta creada anteriormente en el viewholder y se lo pasa a cada una de las ordenes para que se pinten igual todos
@@ -139,6 +145,7 @@ class OrdenesAdapter(
            addDetalleDialog(codigoOrden)
        }
 
+        obtenerClientes()
     }
 
     private fun isValidBase64(str: String): Boolean {
@@ -205,8 +212,49 @@ class OrdenesAdapter(
         }
 
         val codigo: EditText = subView.findViewById(R.id.etCodigo)
-        val tipo: EditText = subView.findViewById(R.id.etTipo)
-        val cliente: EditText = subView.findViewById(R.id.etOrden)
+
+        tipos = subView.findViewById(R.id.etTipo) as Spinner
+
+        val adapter =
+            ArrayAdapter.createFromResource(context, R.array.tipos, android.R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.preference_category)
+        tipos.adapter = adapter
+
+        var tipo:String? = null
+
+        tipos.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                tipo = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+        clientes= subView.findViewById(R.id.etOrden) as Spinner
+
+        val adaptador1 = ArrayAdapter(context, android.R.layout.simple_spinner_item, listaClientes.map { it.nombre_cliente })
+        adaptador1.setDropDownViewResource(android.R.layout.preference_category)
+        clientes.adapter = adaptador1
+
+        var cliente:String? = null
+
+        clientes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                cliente = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                TODO("Not yet implemented")
+            }
+        }
+
         val sucursal: EditText = subView.findViewById(R.id.etSucursal)
         val persona: EditText = subView.findViewById(R.id.etPersona)
         val tecnico: EditText = subView.findViewById(R.id.etTecnico)
@@ -228,8 +276,37 @@ class OrdenesAdapter(
         //ponemos en cada atributo de ordenes los valores recolectados
 
         codigo.setText(ordenes.codigo_orden_trabajo)
-        tipo.setText(ordenes.tipo_orden_trabajo)
-        cliente.setText(ordenes.cliente)
+
+        tipos = subView.findViewById(R.id.etTipo) as Spinner
+
+        adapter.setDropDownViewResource(android.R.layout.preference_category)
+        tipos.adapter = adapter
+
+        // Obtener el valor del campo en la base de datos
+        val tipo1: String = ordenes.tipo_orden_trabajo
+
+        // Obtener la posición del elemento en el Spinner
+        val position = adapter.getPosition(tipo1)
+
+        // Establecer la selección del Spinner
+        tipos.setSelection(position)
+
+
+
+        clientes = subView.findViewById(R.id.etOrden) as Spinner
+
+        adaptador1.setDropDownViewResource(android.R.layout.preference_category)
+        clientes.adapter = adaptador1
+
+        // Obtener el valor del campo en la base de datos
+        val cliente1: String = ordenes.cliente
+
+        // Obtener la posición del elemento en el Spinner
+        val position1 = adaptador1.getPosition(cliente1)
+
+        // Establecer la selección del Spinner
+        clientes.setSelection(position1)
+
         sucursal.setText(ordenes.sucursal)
         persona.setText(ordenes.persona_encargada)
         tecnico.setText(ordenes.tecnico)
@@ -270,8 +347,8 @@ class OrdenesAdapter(
         ) { _, _ ->
 
             this.ordenes.codigo_orden_trabajo = codigo.text.toString()
-            this.ordenes.tipo_orden_trabajo = tipo.text.toString()
-            this.ordenes.cliente = cliente.text.toString()
+            this.ordenes.tipo_orden_trabajo = tipo.toString()
+            this.ordenes.cliente = cliente.toString()
             this.ordenes.sucursal = sucursal.text.toString()
             this.ordenes.persona_encargada = persona.text.toString()
             this.ordenes.tecnico = tecnico.text.toString()
@@ -396,6 +473,21 @@ class OrdenesAdapter(
         }
     }
 
+
+    fun obtenerClientes(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = RetrofitClient.webService.obtenerClientes()
+
+            if(call.isSuccessful){
+                listaClientes = call.body()!!.listaClientes
+            }else{
+                Toast.makeText(context,"Error",Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
+
+
     private fun setupRecyclerView1() {
         val inflater = LayoutInflater.from(context)
         val subView = inflater.inflate(R.layout.activity_main, null)
@@ -448,8 +540,50 @@ class OrdenesAdapter(
         }
 
         val codigoField: EditText = subView.findViewById(R.id.etCodigo)
-        val tipoField: EditText = subView.findViewById(R.id.etTipo)
-        val cliField: EditText = subView.findViewById(R.id.etOrden)
+
+        tipos = subView.findViewById(R.id.etTipo) as Spinner
+
+        val adapter =
+            ArrayAdapter.createFromResource(context, R.array.tipos, android.R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.preference_category)
+        tipos.adapter = adapter
+
+        var tipoField:String? = null
+
+
+        tipos.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                tipoField = parent.getItemAtPosition(position) as String
+               /* var posicionCampo = adapter.getPosition(tipoField)
+                tipos.setSelection(posicionCampo)*/
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+        clientes = subView.findViewById(R.id.etOrden) as Spinner
+        clientes.adapter = ArrayAdapter(context, android.R.layout.preference_category, listaClientes.map { it.nombre_cliente })
+
+        var cliField:String? = null
+
+        clientes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                cliField = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                TODO("Not yet implemented")
+            }
+        }
+
+
         val sucField: EditText = subView.findViewById(R.id.etSucursal)
         val perField: EditText = subView.findViewById(R.id.etPersona)
         val tecField: EditText = subView.findViewById(R.id.etTecnico)
@@ -468,8 +602,8 @@ class OrdenesAdapter(
         val firma1: ImageView =subView.findViewById(R.id.FirmaC)
 
         codigoField.setText(ordenes.codigo_orden_trabajo)
-        tipoField.setText(ordenes.tipo_orden_trabajo)
-        cliField.setText(ordenes.cliente)
+        tipoField.toString()
+        cliField.toString()
         sucField.setText(ordenes.sucursal)
         perField.setText(ordenes.persona_encargada)
         tecField.setText(ordenes.tecnico)

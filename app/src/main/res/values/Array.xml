@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tipos">
+        <item>Preventivo</item>
+        <item>Correctivo</item>
+        <item>Diagnostico</item>
+        <item>Entrega de Equipo</item>
+        <item>Retiro de Equipo</item>
+        <item>Garantia</item>
+        <item>Trabajo en Bodega</item>
+    </string-array>
+    
+</resources>
