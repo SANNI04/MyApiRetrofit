@@ -10,5 +10,10 @@
     <string name="detalle">Detalle guardado con exito</string>
     <string name="detalleError">Error,algo salio mal</string>
     <string name="tipo_orden">Tipo Orden</string>
+    <string name="registrate">Registrate</string>
+    <string name="login">Login</string>
+    <string name="clave">Clave</string>
+    <string name="password">Password</string>
+    <string name="usuario">Usuario</string>
 
 </resources>

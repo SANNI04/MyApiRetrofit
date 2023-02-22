@@ -77,13 +77,9 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:padding="20dp"
-                    android:textSize="12sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tipo Orden Trabajo" />
 
                 <Spinner
                     android:id="@+id/etTipo"
@@ -100,6 +96,7 @@
                     android:padding="25dp"
                     android:textSize="12sp" />
 
+
                 <Spinner
                     android:id="@+id/etOrden"
                     android:layout_width="match_parent"
@@ -113,7 +110,7 @@
                     android:padding="12dp"
                     android:textSize="12dp" />
 
-                <EditText
+                <Spinner
                     android:id="@+id/etSucursal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -137,9 +134,10 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                <EditText
+                <Spinner
                     android:id="@+id/etTecnico"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -163,7 +161,8 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etFecha_ot"
@@ -176,7 +175,8 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etEquipo"
@@ -189,9 +189,10 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                <EditText
+                <Spinner
                     android:id="@+id/etMarca"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -215,7 +216,8 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etHoraI"
@@ -228,7 +230,8 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etHoraF"
@@ -241,7 +244,8 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etVoltaje"
@@ -254,7 +258,8 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etAmperaje"
@@ -267,7 +272,8 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etClavija"
@@ -280,9 +286,10 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                <EditText
+                <Spinner
                     android:id="@+id/etModelo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -306,7 +313,8 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/FirmaC"

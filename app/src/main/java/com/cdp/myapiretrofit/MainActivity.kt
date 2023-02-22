@@ -3,6 +3,7 @@ package com.cdp.myapiretrofit
 import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -19,8 +20,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cdp.myapiretrofit.adaptadorRecycler.OrdenesAdapter
 import com.cdp.myapiretrofit.capturaFirma.CaptureBitmapView
-import com.cdp.myapiretrofit.clases.Clientes
-import com.cdp.myapiretrofit.clases.Ordenes
+import com.cdp.myapiretrofit.clases.*
 import com.cdp.myapiretrofit.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -46,20 +46,28 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     private val TAG = "MainActivity()"
 
-
-    lateinit var tipos: Spinner
-
-
     lateinit var txtBuscar:SearchView
 
     companion object {
         val instance = MainActivity()
     }
 
+    lateinit var tipos: Spinner
 
     lateinit var cliente: Spinner
     var listaClientes = arrayListOf<Clientes>()
-    //var listaClientes: List<Clientes> = emptyList()
+
+    lateinit var sucursal : Spinner
+    var listaSucursales = arrayListOf<Sucursales>()
+
+    lateinit var  tecnico : Spinner
+    var listaTecnicos = arrayListOf<Tecnicos>()
+
+    lateinit var marcas : Spinner
+    var listaMarcas = arrayListOf<Marcas>()
+
+    lateinit var  modelos : Spinner
+    var listaModelos = arrayListOf<Modelos>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,6 +103,10 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         txtBuscar.setOnQueryTextListener(this)
 
         obtenerClientes()
+        obtenerSucursales()
+        obtenerTecnicos()
+        obtenerMarcas()
+        obtenerModelos()
 
     }
 
@@ -128,13 +140,19 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         tipos = subView.findViewById(R.id.etTipo) as Spinner
 
         val adapter =
-            ArrayAdapter.createFromResource(this, R.array.tipos, android.R.layout.simple_spinner_item)
+            ArrayAdapter.createFromResource(
+                this,
+                R.array.tipos,
+                android.R.layout.simple_spinner_item
+            )
         adapter.setDropDownViewResource(android.R.layout.preference_category)
         tipos.adapter = adapter
 
-        var tipoField:String? = null
+        tipos.setSelection(0)
 
-        tipos.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+        var tipoField: String? = null
+
+        tipos.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View?,
@@ -153,6 +171,9 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         cliente.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaClientes.map { it.nombre_cliente })
         adapter.setDropDownViewResource(android.R.layout.preference_category)
+
+        cliente.setSelection(0)
+
         var cliField:String? = null
 
         cliente.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -165,20 +186,119 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             }
         }
 
-        val sucField: EditText = subView.findViewById(R.id.etSucursal)
+        sucursal = subView.findViewById(R.id.etSucursal) as Spinner
+
+        sucursal.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaSucursales.map { it.nombre_sucursal })
+        adapter.setDropDownViewResource(android.R.layout.preference_category)
+
+        sucursal.setSelection(24)
+
+        var sucField:String? = null
+
+        sucursal.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                sucField = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
         val perField: EditText = subView.findViewById(R.id.etPersona)
-        val tecField: EditText = subView.findViewById(R.id.etTecnico)
+
+        tecnico= subView.findViewById(R.id.etTecnico) as Spinner
+
+        val titulo =Tecnicos(0,"Tecnico: ")
+        val opciones = listaTecnicos.plus(titulo)
+
+        tecnico.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, opciones.map{ it.primer_nombre })
+        adapter.setDropDownViewResource(android.R.layout.preference_category)
+
+        tecnico.setSelection(7)
+
+        var tecField : String? = null
+
+        tecnico.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                tecField = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
         val obField: EditText = subView.findViewById(R.id.etObservaciones)
         val feField: EditText = subView.findViewById(R.id.etFecha_ot)
+
+
         val equField: EditText = subView.findViewById(R.id.etEquipo)
-        val marField: EditText = subView.findViewById(R.id.etMarca)
+
+        marcas= subView.findViewById(R.id.etMarca) as Spinner
+
+        marcas.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaMarcas.map{ it.marca })
+        adapter.setDropDownViewResource(android.R.layout.preference_category)
+
+        var marField : String? = null
+
+        marcas.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                marField = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
         val estField: EditText = subView.findViewById(R.id.etEstado)
         val hriField: EditText = subView.findViewById(R.id.etHoraI)
         val hrfField: EditText = subView.findViewById(R.id.etHoraF)
         val volField: EditText = subView.findViewById(R.id.etVoltaje)
         val ampField: EditText = subView.findViewById(R.id.etAmperaje)
         val claField: EditText = subView.findViewById(R.id.etClavija)
-        val modField: EditText = subView.findViewById(R.id.etModelo)
+
+        modelos= subView.findViewById(R.id.etModelo) as Spinner
+
+        modelos.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaModelos.map{ it.modelo })
+        adapter.setDropDownViewResource(android.R.layout.preference_category)
+
+        modelos.setSelection(204)
+
+        var modField : String? = null
+
+        modelos.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                modField = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+
         val serField: EditText = subView.findViewById(R.id.etSerie)
         val firma1: LinearLayout = subView.findViewById(R.id.etFirma)
         //mSig.getBitmap()
@@ -200,20 +320,20 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             this.ordenes.codigo_orden_trabajo = codigoField.text.toString()
             this.ordenes.tipo_orden_trabajo = tipoField.toString()
             this.ordenes.cliente = cliField.toString()
-            this.ordenes.sucursal = sucField.text.toString()
+            this.ordenes.sucursal = sucField.toString()
             this.ordenes.persona_encargada = perField.text.toString()
-            this.ordenes.tecnico = tecField.text.toString()
+            this.ordenes.tecnico = tecField.toString()
             this.ordenes.observaciones = obField.text.toString()
             this.ordenes.fecha_orden_trabajo = feField.text.toString()
             this.ordenes.equipo = equField.text.toString()
-            this.ordenes.marca = marField.text.toString()
+            this.ordenes.marca = marField.toString()
             this.ordenes.estado_equipo = estField.text.toString()
             this.ordenes.hora_inicio = hriField.text.toString()
             this.ordenes.hora_finalizacion = hrfField.text.toString()
             this.ordenes.voltaje = volField.text.toString()
             this.ordenes.amperaje = ampField.text.toString()
             this.ordenes.clavija = claField.text.toString()
-            this.ordenes.modelo = modField.text.toString()
+            this.ordenes.modelo = modField.toString()
             this.ordenes.serie = serField.text.toString()
             this.ordenes.firma_cliente = mSig.getBytes(firma1).toString()
             //this.ordenes.firma_cliente = mSig.getBytes().toString()
@@ -382,6 +502,63 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             }
         }
     }
+
+    fun obtenerSucursales(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = RetrofitClient.webService.obtenerSucursales()
+            runOnUiThread{
+                if(call.isSuccessful){
+                    listaSucursales = call.body()!!.listaSucursales
+                }else{
+                    Toast.makeText(this@MainActivity, "Error consultar todos", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
+    fun obtenerTecnicos(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = RetrofitClient.webService.obtenerTecnicos()
+            runOnUiThread{
+                if(call.isSuccessful){
+                    listaTecnicos = call.body()!!.listaTecnicos
+                }else{
+                    Toast.makeText(this@MainActivity, "Error consultar todos", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
+    fun obtenerMarcas(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = RetrofitClient.webService.obtenerMarcas()
+            runOnUiThread{
+                if(call.isSuccessful){
+                    listaMarcas = call.body()!!.listaMarcas
+                }else{
+                    Toast.makeText(this@MainActivity, "Error consultar todos", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
+    fun obtenerModelos(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = RetrofitClient.webService.obtenerModelos()
+            runOnUiThread{
+                if(call.isSuccessful){
+                    listaModelos = call.body()!!.listaModelos
+                }else{
+                    Toast.makeText(this@MainActivity, "Error consultar todos", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
 
     //Limpiamos el objeto
 

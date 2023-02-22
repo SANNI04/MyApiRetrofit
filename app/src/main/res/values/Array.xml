@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="tipos">
+        <item>Tipo Orden Trabajo: </item>
         <item>Preventivo</item>
         <item>Correctivo</item>
         <item>Diagnostico</item>

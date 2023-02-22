@@ -65,8 +65,8 @@ interface WebService {
         @Body repuestos: Repuestos
     ): Response<JsonObject>
 
-    @GET("ApiRestImaq/usuarios/login")
-    suspend fun  obtenerUsuario(): Response<UsuariosResponse>
+    @POST("ApiRestImaq/usuarios/login")
+    suspend fun login(@Body usuarios: Usuarios): Response<UsuariosResponse>
 
     @POST("ApiRestImaq/detalles/create")
     suspend fun agregarDetalle(
@@ -76,11 +76,17 @@ interface WebService {
     @GET("ApiRestImaq/clientes/read")
     suspend fun  obtenerClientes(): Response<ClientesResponse>
 
-    @GET("ApiRestImaq/clientes/read")
+    @GET("ApiRestImaq/sucursales/read")
     suspend fun  obtenerSucursales(): Response<SucursalesResponse>
 
-    @GET("ApiRestImaq/clientes/read")
+    @GET("ApiRestImaq/tecnicos/read")
     suspend fun  obtenerTecnicos(): Response<TecnicosResponse>
+
+    @GET("ApiRestImaq/modelos/read")
+    suspend fun  obtenerModelos(): Response<ModelosResponse>
+
+    @GET("ApiRestImaq/marcas/read")
+    suspend fun  obtenerMarcas(): Response<MarcasResponse>
 
 }
 

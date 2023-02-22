@@ -67,4 +67,5 @@ dependencies {
 
     
     implementation "com.shamanland:xdroid-toaster:0.0.10"
+
 }
