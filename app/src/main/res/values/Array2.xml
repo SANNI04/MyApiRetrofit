@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="equipos">
+        <item>Equipo: </item>
+        <item>Montacargas</item>
+        <item>Estibador Electrico</item>
+    </string-array>
+</resources>

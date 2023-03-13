@@ -1,16 +1,15 @@
 package com.cdp.myapiretrofit
 
 import android.Manifest
-import android.content.Context
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.DialogInterface
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +26,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     var listaOrdenes = arrayListOf<Ordenes>()
 
-    var ordenes = Ordenes(-1, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
+    var ordenes = Ordenes(-1, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
 
     private val TAG = "MainActivity()"
 
@@ -53,6 +51,8 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     lateinit var tipos: Spinner
+
+    lateinit var equipos: Spinner
 
     lateinit var cliente: Spinner
     var listaClientes = arrayListOf<Clientes>()
@@ -101,6 +101,12 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         }
 
         txtBuscar.setOnQueryTextListener(this)
+
+
+        binding.btnSalir.setOnClickListener{
+            finish()
+        }
+
 
         obtenerClientes()
         obtenerSucursales()
@@ -172,7 +178,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         cliente.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaClientes.map { it.nombre_cliente })
         adapter.setDropDownViewResource(android.R.layout.preference_category)
 
-        cliente.setSelection(0)
+        cliente.setSelection(13)
 
         var cliField:String? = null
 
@@ -220,7 +226,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         tecnico.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, opciones.map{ it.primer_nombre })
         adapter.setDropDownViewResource(android.R.layout.preference_category)
 
-        tecnico.setSelection(7)
+        tecnico.setSelection(14)
 
         var tecField : String? = null
 
@@ -240,10 +246,58 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         }
 
         val obField: EditText = subView.findViewById(R.id.etObservaciones)
-        val feField: EditText = subView.findViewById(R.id.etFecha_ot)
 
+        val feField = subView.findViewById<EditText>(R.id.etFecha_ot)
+        val calendar = Calendar.getInstance()
 
-        val equField: EditText = subView.findViewById(R.id.etEquipo)
+        feField.setOnClickListener {
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(this,
+                { _, y, m, d ->
+                // Obtener la fecha seleccionada y mostrarla en el EditText
+                val selectedDate = String.format("%04d-%02d-%02d", y, m+1, d)
+                feField.setText(selectedDate)
+                },
+            year,
+            month,
+            dayOfMonth
+            )
+
+            datePickerDialog.show()
+        }
+
+        equipos = subView.findViewById(R.id.etEquipo) as Spinner
+
+        val adapter1 =
+            ArrayAdapter.createFromResource(
+                this,
+                R.array.equipos,
+                android.R.layout.simple_spinner_item
+            )
+        adapter1.setDropDownViewResource(android.R.layout.preference_category)
+        equipos.adapter = adapter1
+
+        equipos.setSelection(0)
+
+        var equField: String? = null
+
+        equipos.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                equField = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
 
         marcas= subView.findViewById(R.id.etMarca) as Spinner
 
@@ -268,8 +322,39 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         }
 
         val estField: EditText = subView.findViewById(R.id.etEstado)
+        val horoField: EditText = subView.findViewById(R.id.etHorometro)
         val hriField: EditText = subView.findViewById(R.id.etHoraI)
+
+        hriField.setOnClickListener {
+            val timePickerDialog = TimePickerDialog(
+                this,
+                TimePickerDialog.OnTimeSetListener { timePicker, hourOfDay, minute ->
+                    val selectedTime = String.format("%02d:%02d:%02d", hourOfDay, minute, 0)
+                    hriField.setText(selectedTime)
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true
+            )
+            timePickerDialog.show()
+        }
+
         val hrfField: EditText = subView.findViewById(R.id.etHoraF)
+
+        hrfField.setOnClickListener {
+            val timePickerDialog = TimePickerDialog(
+                this,
+                TimePickerDialog.OnTimeSetListener { timePicker, hourOfDay, minute ->
+                    val selectedTime = String.format("%02d:%02d:%02d", hourOfDay, minute, 0)
+                    hrfField.setText(selectedTime)
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true
+            )
+            timePickerDialog.show()
+        }
+
         val volField: EditText = subView.findViewById(R.id.etVoltaje)
         val ampField: EditText = subView.findViewById(R.id.etAmperaje)
         val claField: EditText = subView.findViewById(R.id.etClavija)
@@ -279,7 +364,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         modelos.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaModelos.map{ it.modelo })
         adapter.setDropDownViewResource(android.R.layout.preference_category)
 
-        modelos.setSelection(204)
+        modelos.setSelection(226)
 
         var modField : String? = null
 
@@ -297,7 +382,6 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                 TODO("Not yet implemented")
             }
         }
-
 
         val serField: EditText = subView.findViewById(R.id.etSerie)
         val firma1: LinearLayout = subView.findViewById(R.id.etFirma)
@@ -325,9 +409,10 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             this.ordenes.tecnico = tecField.toString()
             this.ordenes.observaciones = obField.text.toString()
             this.ordenes.fecha_orden_trabajo = feField.text.toString()
-            this.ordenes.equipo = equField.text.toString()
+            this.ordenes.equipo = equField.toString()
             this.ordenes.marca = marField.toString()
             this.ordenes.estado_equipo = estField.text.toString()
+            this.ordenes.horometro = horoField.text.toString()
             this.ordenes.hora_inicio = hriField.text.toString()
             this.ordenes.hora_finalizacion = hrfField.text.toString()
             this.ordenes.voltaje = volField.text.toString()
@@ -340,24 +425,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
             // valida los campos que no esten vacios:
 
-            if (TextUtils.isEmpty(codigoField.toString())
-                && TextUtils.isEmpty(tipoField.toString())
-                && TextUtils.isEmpty(cliField.toString())
-                && TextUtils.isEmpty(sucField.toString())
-                && TextUtils.isEmpty(perField.toString())
-                && TextUtils.isEmpty(tecField.toString())
-                && TextUtils.isEmpty(obField.toString())
-                && TextUtils.isEmpty(feField.toString())
-                && TextUtils.isEmpty(equField.toString())
-                && TextUtils.isEmpty(marField.toString())
-                && TextUtils.isEmpty(estField.toString())
-                && TextUtils.isEmpty(hriField.toString())
-                && TextUtils.isEmpty(hrfField.toString())
-                && TextUtils.isEmpty(volField.toString())
-                && TextUtils.isEmpty(ampField.toString())
-                && TextUtils.isEmpty(claField.toString())
-                && TextUtils.isEmpty(modField.toString())
-                && TextUtils.isEmpty(serField.toString()))
+            if (TextUtils.isEmpty(codigoField.toString()))
             {
 
                 Toast.makeText(this, "Se deben llenar los campos", Toast.LENGTH_LONG).show()
@@ -438,6 +506,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     }
 
+       // var equField: String? = null
 
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>, grantResults: IntArray) {
@@ -559,6 +628,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         }
     }
 
+        //var equField: String? = null
 
     //Limpiamos el objeto
 
@@ -575,6 +645,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         this.ordenes.equipo= ""
         this.ordenes.marca= ""
         this.ordenes.estado_equipo= ""
+        this.ordenes.horometro= ""
         this.ordenes.hora_inicio= ""
         this.ordenes.hora_finalizacion= ""
         this.ordenes.voltaje= ""

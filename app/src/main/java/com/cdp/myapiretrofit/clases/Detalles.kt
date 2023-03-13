@@ -55,6 +55,7 @@ data class Detalles (
     var motor_de_elevacion: String,
     var escobillas1: String,
     var estado_interconectores : String,
+
     var estado_tornillos: String,
     var voltaje : String,
     var caida_de_voltaje : String,
@@ -65,6 +66,7 @@ data class Detalles (
     var exploradoras: String,
     var luz_giratoria: String,
     var cinturon: String,
+
     var extintor: String,
     var cargador: String,
     var rueda_motriz: String,

@@ -1,9 +1,6 @@
 package com.cdp.myapiretrofit
 
-import com.cdp.myapiretrofit.clases.Detalles
-import com.cdp.myapiretrofit.clases.Ordenes
-import com.cdp.myapiretrofit.clases.Repuestos
-import com.cdp.myapiretrofit.clases.Usuarios
+import com.cdp.myapiretrofit.clases.*
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import retrofit2.Response
@@ -87,6 +84,11 @@ interface WebService {
 
     @GET("ApiRestImaq/marcas/read")
     suspend fun  obtenerMarcas(): Response<MarcasResponse>
+
+    @POST("ApiRestImaq/repuestosInstalados/create")
+    suspend fun agregarRepuestosInstalados(
+        @Body repuestosinstalados: RepuestosInstalados
+    ): Response<JsonObject>
 
 }
 

@@ -2,33 +2,34 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="10dp"
-    android:padding="4dp"
-    tools:context=".MainActivity"
     android:orientation="vertical"
-    android:id="@+id/parent_scroll">
-
+    android:padding="4dp"
+    android:textAlignment="center"
+    tools:context=".MainActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="382dp"
+            android:layout_width="match_parent"
             android:layout_height="69dp"
             android:layout_marginLeft="0dp"
             android:background="#FA9808"
             android:backgroundTint="#FF9800"
             android:foregroundGravity="center"
             android:gravity="center"
-            android:paddingRight="50dp"
+            android:paddingRight="10dp"
             android:text="Ordenes de Trabajo"
+            android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -42,12 +43,25 @@
             android:text="Agregar Orden"
             android:textColor="#020202" />
 
+        <Button
+            android:id="@+id/btnSalir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left|end"
+            android:layout_marginTop="3dp"
+            android:backgroundTint="#FF9800"
+            android:minHeight="48dp"
+            android:text="Salir"
+            android:textColor="#000000"
+            android:textColorLink="#FFEB3B"
+            android:textStyle="bold" />
+
         <SearchView
             android:id="@+id/txtBuscar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/bordered_button"/>
+            android:background="@drawable/bordered_button" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/myOrdenesList"

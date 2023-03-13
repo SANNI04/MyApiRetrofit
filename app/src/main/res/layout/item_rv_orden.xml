@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
     android:background="#F4EB9D"
     app:cardBackgroundColor="#A9070707"
     app:cardCornerRadius="10dp"
@@ -107,6 +106,14 @@
             android:padding="5dp" />
 
         <TextView
+            android:id="@+id/Horometro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="Horometro"
+            android:padding="5dp" />
+
+        <TextView
             android:id="@+id/HoraI"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -177,7 +184,7 @@
 
             <Button
                 android:id="@+id/btnEditar"
-                android:layout_width="wrap_content"
+                android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginHorizontal="5dp"
@@ -201,14 +208,42 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnComprobante"
+                android:layout_width="149dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="PDF"
+                android:textColor="#090909" />
 
             <Button
                 android:id="@+id/btnDetalle"
-                android:layout_width="218dp"
+                android:layout_width="232dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_marginEnd="10dp"
                 android:text="Detalle Maquina"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnRepuestos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_weight="1"
+                android:text="Repuestos Instalados"
                 android:textColor="#000000" />
         </LinearLayout>
 

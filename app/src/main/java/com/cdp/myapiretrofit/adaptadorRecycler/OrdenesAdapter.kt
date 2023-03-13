@@ -2,10 +2,14 @@ package com.cdp.myapiretrofit.adaptadorRecycler
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.text.TextUtils
 import android.util.Base64
@@ -17,8 +21,10 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.cdp.myapiretrofit.MainActivity
 import com.cdp.myapiretrofit.R
 import com.cdp.myapiretrofit.RetrofitClient
 import com.cdp.myapiretrofit.capturaFirma.CaptureBitmapView
@@ -27,7 +33,6 @@ import com.cdp.myapiretrofit.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import xdroid.toaster.Toaster
 import xdroid.toaster.Toaster.toast
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,7 +49,7 @@ class OrdenesAdapter(
     var context: Context,
     var listaOrdenes: ArrayList<Ordenes>
 
-    ): RecyclerView.Adapter<OrdenesAdapter.OrdenesViewHolder>()  {
+    ): RecyclerView.Adapter<OrdenesAdapter.OrdenesViewHolder>(),  SearchView.OnQueryTextListener   {
 
     //PARA REALIZAR LA FUNCION DE BUSQUEDA
     var listaOriginal: ArrayList<Ordenes>
@@ -55,7 +60,7 @@ class OrdenesAdapter(
         listaOriginal.addAll(listaOrdenes)
     }
 
-    var ordenes = Ordenes(-1,"","","","","","","","","","","","","","","","","","","")
+    var ordenes = Ordenes(-1,"","","","","","","","","","","","","","","","","","","","")
 
     lateinit var binding: ActivityMainBinding
     private lateinit var mSig: CaptureBitmapView
@@ -63,6 +68,8 @@ class OrdenesAdapter(
     private val REQUEST_CODE_WRITE_EXTERNAL_STORAGE = 1
 
     var repuestos= Repuestos(-1,"","","")
+
+    var repuestosInstalados = RepuestosInstalados(-1,"","","")
 
     var detalles = Detalles(-1,"","","","","",
         "","","","","","","",
@@ -75,6 +82,8 @@ class OrdenesAdapter(
         "","","","","","","","","")
 
     lateinit var tipos: Spinner
+
+    lateinit var equipos: Spinner
 
     lateinit var clientes: Spinner
     var listaClientes = arrayListOf<Clientes>()
@@ -91,6 +100,8 @@ class OrdenesAdapter(
     lateinit var  modelos : Spinner
     var listaModelos = arrayListOf<Modelos>()
 
+    lateinit var txtBuscar:SearchView
+
 
 
     //creamos ahora un viewholder ques una vista determinada para cada orden de la lista(lo que lleva dentro esa vista)
@@ -100,6 +111,7 @@ class OrdenesAdapter(
         val vista =
             LayoutInflater.from(parent.context).inflate(R.layout.item_rv_orden, parent, false)
         return OrdenesViewHolder(vista)
+
     }
 
     //Ahora este metodo agarra la vista que esta creada anteriormente en el viewholder y se lo pasa a cada una de las ordenes para que se pinten igual todos
@@ -110,6 +122,8 @@ class OrdenesAdapter(
         //var mSig = CaptureBitmapView(context, null)
 
         val ordenes = listaOrdenes[position]
+
+        var ruta = "http://www.isa-america.com/web_app/vistas_modelos/ordenTrabajo/pdforden.php?&index_id='${ordenes.codigo_orden_trabajo}'"
 
         holder.codigo_orden_trabajo.text = ordenes.codigo_orden_trabajo
         holder.tipo_orden_trabajo.text = ordenes.tipo_orden_trabajo
@@ -122,6 +136,7 @@ class OrdenesAdapter(
         holder.equipo.text = ordenes.equipo
         holder.marca.text = ordenes.marca
         holder.estado_equipo.text = ordenes.estado_equipo
+        holder.horometro.text = ordenes.horometro
         holder.hora_inicio.text = ordenes.hora_inicio
         holder.hora_finalizacion.text = ordenes.hora_finalizacion
         holder.voltaje.text = ordenes.voltaje
@@ -140,26 +155,48 @@ class OrdenesAdapter(
             Log.e("Error","La cadena no es valida")
         }
 
+        setupRecyclerView1()
+
+        val inflater = LayoutInflater.from(context)
+        val subView = inflater.inflate(R.layout.activity_main, null)
+
+        txtBuscar = subView.findViewById(R.id.txtBuscar)
+
+
         holder.btnEditar.setOnClickListener{
+            obtenerOrdenes()
             editarOrden(ordenes)
             editTaskDialog()
         }
 
        holder.btnAgregarRe.setOnClickListener{
-           val codigoOrden = listaOrdenes[holder.bindingAdapterPosition].codigo_orden_trabajo
-           addRTaskDialog(codigoOrden)
+           //val codigoOrden = listaOrdenes[holder.bindingAdapterPosition].codigo_orden_trabajo
+           addRTaskDialog(ordenes)
         }
 
+
        holder.btnDetalle.setOnClickListener{
-           val codigoOrden = listaOrdenes[holder.bindingAdapterPosition].codigo_orden_trabajo
-           addDetalleDialog(codigoOrden)
+           //val codigoOrden = listaOrdenes[holder.bindingAdapterPosition].codigo_orden_trabajo
+           addDetalleDialog(ordenes)
        }
+
+        holder.btnComprobante.setOnClickListener{
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ruta))
+            context.startActivity(intent)
+        }
+
+        holder.btnRepuestos.setOnClickListener{
+            addRepuInstaTaskDialog(ordenes)
+        }
+
+        txtBuscar.setOnQueryTextListener(this)
 
         obtenerClientes()
         obtenerSucursales()
         obtenerTecnicos()
-        obtenerMarcas()
         obtenerModelos()
+        obtenerMarcas()
+
     }
 
     private fun isValidBase64(str: String): Boolean {
@@ -191,6 +228,7 @@ class OrdenesAdapter(
         val equipo = itemView.findViewById(R.id.Equipo) as TextView
         val marca = itemView.findViewById(R.id.Marca) as TextView
         val estado_equipo = itemView.findViewById(R.id.Estado) as TextView
+        val horometro = itemView.findViewById(R.id.Horometro) as TextView
         val hora_inicio = itemView.findViewById(R.id.HoraI) as TextView
         val hora_finalizacion = itemView.findViewById(R.id.HoraF) as TextView
         val voltaje = itemView.findViewById(R.id.Voltaje) as TextView
@@ -203,6 +241,8 @@ class OrdenesAdapter(
         val btnEditar = itemView.findViewById(R.id.btnEditar) as Button
         val btnAgregarRe = itemView.findViewById(R.id.btnAgregarRe) as Button
         val btnDetalle = itemView.findViewById(R.id.btnDetalle) as Button
+        val btnComprobante = itemView.findViewById(R.id.btnComprobante) as Button
+        val btnRepuestos = itemView.findViewById(R.id.btnRepuestos) as Button
 
     }
 
@@ -210,7 +250,7 @@ class OrdenesAdapter(
     private fun editTaskDialog() {
 
         val inflater = LayoutInflater.from(context)
-        val subView = inflater.inflate(R.layout.item_formulario_orden, null)
+        val subView = inflater.inflate(R.layout.item_formulario_orden_editar, null)
 
         mSig = CaptureBitmapView(context, null)
         val firma: LinearLayout = subView.findViewById(R.id.etFirma)
@@ -227,9 +267,9 @@ class OrdenesAdapter(
 
         val codigo: EditText = subView.findViewById(R.id.etCodigo)
 
-        tipos = subView.findViewById(R.id.etTipo) as Spinner
+       /* tipos = subView.findViewById(R.id.etTipo) as Spinner*/
 
-        val adapter =
+        /*val adapter =
             ArrayAdapter.createFromResource(context, R.array.tipos, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.preference_category)
         tipos.adapter = adapter
@@ -249,9 +289,9 @@ class OrdenesAdapter(
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
-        }
+        }*/
 
-        clientes= subView.findViewById(R.id.etOrden) as Spinner
+       /* clientes= subView.findViewById(R.id.etOrden) as Spinner
 
         val adaptador1 = ArrayAdapter(context, android.R.layout.simple_spinner_item, listaClientes.map { it.nombre_cliente })
         adaptador1.setDropDownViewResource(android.R.layout.preference_category)
@@ -267,9 +307,9 @@ class OrdenesAdapter(
             override fun onNothingSelected(parent: AdapterView<*>) {
                 TODO("Not yet implemented")
             }
-        }
+        }*/
 
-        sucursales= subView.findViewById(R.id.etSucursal) as Spinner
+        /*sucursales= subView.findViewById(R.id.etSucursal) as Spinner
 
         val adaptador2 = ArrayAdapter(context, android.R.layout.simple_spinner_item, listaSucursales.map { it.nombre_sucursal })
         adaptador2.setDropDownViewResource(android.R.layout.preference_category)
@@ -286,11 +326,11 @@ class OrdenesAdapter(
                 TODO("Not yet implemented")
             }
         }
-
+*/
 
         val persona: EditText = subView.findViewById(R.id.etPersona)
 
-        tecnicos= subView.findViewById(R.id.etTecnico) as Spinner
+        /*tecnicos= subView.findViewById(R.id.etTecnico) as Spinner
 
         val adaptador3 = ArrayAdapter(context, android.R.layout.simple_spinner_item, listaTecnicos.map { it.primer_nombre })
         adaptador3.setDropDownViewResource(android.R.layout.preference_category)
@@ -307,13 +347,57 @@ class OrdenesAdapter(
                 TODO("Not yet implemented")
             }
         }
-
+*/
         val observaciones: EditText = subView.findViewById(R.id.etObservaciones)
-        val fecha_ot: EditText = subView.findViewById(R.id.etFecha_ot)
-        val equipo: EditText = subView.findViewById(R.id.etEquipo)
 
+       /* val fecha_ot: EditText = subView.findViewById(R.id.etFecha_ot)*/
 
-        marcas= subView.findViewById(R.id.etMarca) as Spinner
+        val calendar = Calendar.getInstance()
+
+        /*fecha_ot.setOnClickListener {
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(context,
+                { _, y, m, d ->
+                    // Obtener la fecha seleccionada y mostrarla en el EditText
+                    val selectedDate = String.format("%04d-%02d-%02d", y, m+1, d)
+                    fecha_ot.setText(selectedDate)
+                },
+                year,
+                month,
+                dayOfMonth
+            )
+
+            datePickerDialog.show()
+        }*/
+
+       /* equipos = subView.findViewById(R.id.etEquipo) as Spinner
+
+        val adapter1 =
+            ArrayAdapter.createFromResource(context, R.array.equipos, android.R.layout.simple_spinner_item)
+        adapter1.setDropDownViewResource(android.R.layout.preference_category)
+        equipos.adapter = adapter1
+
+        var equipo: String? = null
+
+        equipos.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                equipo = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+*/
+       /* marcas= subView.findViewById(R.id.etMarca) as Spinner
 
         val adaptador4 = ArrayAdapter(context, android.R.layout.simple_spinner_item, listaMarcas.map { it.marca })
         adaptador4.setDropDownViewResource(android.R.layout.preference_category)
@@ -330,19 +414,51 @@ class OrdenesAdapter(
                 TODO("Not yet implemented")
             }
         }
-
+*/
         val estado: EditText = subView.findViewById(R.id.etEstado)
+        val horometro: EditText = subView.findViewById(R.id.etHorometro)
+
         val horaI: EditText = subView.findViewById(R.id.etHoraI)
+        horaI.setOnClickListener {
+            val timePickerDialog = TimePickerDialog(
+                context,
+                TimePickerDialog.OnTimeSetListener { timePicker, hourOfDay, minute ->
+                    val selectedTime = String.format("%02d:%02d:%02d", hourOfDay, minute, 0)
+                    horaI.setText(selectedTime)
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true
+            )
+            timePickerDialog.show()
+        }
+
         val horaF: EditText = subView.findViewById(R.id.etHoraF)
+
+        horaF.setOnClickListener {
+            val timePickerDialog = TimePickerDialog(
+                context,
+                TimePickerDialog.OnTimeSetListener { timePicker, hourOfDay, minute ->
+                    val selectedTime = String.format("%02d:%02d:%02d", hourOfDay, minute, 0)
+                    horaF.setText(selectedTime)
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true
+            )
+            timePickerDialog.show()
+        }
+
+
         val voltaje: EditText = subView.findViewById(R.id.etVoltaje)
         val amperaje: EditText = subView.findViewById(R.id.etAmperaje)
         val clavija: EditText = subView.findViewById(R.id.etClavija)
 
         modelos= subView.findViewById(R.id.etModelo) as Spinner
 
-        val adaptador5 = ArrayAdapter(context, android.R.layout.simple_spinner_item, listaModelos.map { it.modelo })
-        adaptador5.setDropDownViewResource(android.R.layout.preference_category)
-        modelos.adapter = adaptador5
+        val adaptador6 = ArrayAdapter(context, android.R.layout.simple_spinner_item, listaModelos.map { it.modelo })
+        adaptador6.setDropDownViewResource(android.R.layout.preference_category)
+        modelos.adapter = adaptador6
 
         var modelo:String? = null
 
@@ -364,7 +480,7 @@ class OrdenesAdapter(
 
         codigo.setText(ordenes.codigo_orden_trabajo)
 
-        tipos = subView.findViewById(R.id.etTipo) as Spinner
+       /* tipos = subView.findViewById(R.id.etTipo) as Spinner
 
         adapter.setDropDownViewResource(android.R.layout.preference_category)
         tipos.adapter = adapter
@@ -378,8 +494,8 @@ class OrdenesAdapter(
         // Establecer la selección del Spinner
         tipos.setSelection(position)
 
-
-        clientes = subView.findViewById(R.id.etOrden) as Spinner
+*/
+  /*      clientes = subView.findViewById(R.id.etOrden) as Spinner
         adaptador1.setDropDownViewResource(android.R.layout.preference_category)
         clientes.adapter = adaptador1
         val cliente1: String = ordenes.cliente
@@ -395,30 +511,37 @@ class OrdenesAdapter(
         sucursales.setSelection(positionSuc)
 
         //Todo lo anterior remplaza esta linea de codigo al igual que todos los spinner: sucursal.setText(ordenes.sucursal)
-
+*/
         persona.setText(ordenes.persona_encargada)
 
-        tecnicos = subView.findViewById(R.id.etTecnico) as Spinner
+      /*  tecnicos = subView.findViewById(R.id.etTecnico) as Spinner
         adaptador3.setDropDownViewResource(android.R.layout.preference_category)
         tecnicos.adapter = adaptador3
         val tecnico1: String = ordenes.tecnico
         val positionTec = adaptador3.getPosition(tecnico1)
         tecnicos.setSelection(positionTec)
-
+*/
 
         observaciones.setText(ordenes.observaciones)
-        fecha_ot.setText(ordenes.fecha_orden_trabajo)
-        equipo.setText(ordenes.equipo)
+  //    fecha_ot.setText(ordenes.fecha_orden_trabajo)
+
+ /*       equipos = subView.findViewById(R.id.etEquipo) as Spinner
+        adapter1.setDropDownViewResource(android.R.layout.preference_category)
+        equipos.adapter = adapter1
+        val equipo1: String = ordenes.equipo
+        val positionEquipo = adapter1.getPosition(equipo1)
+        equipos.setSelection(positionEquipo)*/
 
 
-        marcas = subView.findViewById(R.id.etMarca) as Spinner
+        /*marcas = subView.findViewById(R.id.etMarca) as Spinner
         adaptador4.setDropDownViewResource(android.R.layout.preference_category)
         marcas.adapter = adaptador4
         val marca1: String = ordenes.marca
         val positionMar = adaptador4.getPosition(marca1)
-        marcas.setSelection(positionMar)
+        marcas.setSelection(positionMar)*/
 
         estado.setText(ordenes.estado_equipo)
+        horometro.setText(ordenes.horometro)
         horaI.setText(ordenes.hora_inicio)
         horaF.setText(ordenes.hora_finalizacion)
         voltaje.setText(ordenes.voltaje)
@@ -426,11 +549,11 @@ class OrdenesAdapter(
         clavija.setText(ordenes.clavija)
 
         modelos = subView.findViewById(R.id.etModelo) as Spinner
-        adaptador5.setDropDownViewResource(android.R.layout.preference_category)
-        modelos.adapter = adaptador5
+        adaptador6.setDropDownViewResource(android.R.layout.preference_category)
+        modelos.adapter = adaptador6
         val modelo1: String = ordenes.modelo
-        val positionMod = adaptador5.getPosition(modelo1)
-        modelos.setSelection(positionMod)
+        val positionmod = adaptador6.getPosition(modelo1)
+        modelos.setSelection(positionmod)
 
         serie.setText(ordenes.serie)
 
@@ -458,16 +581,17 @@ class OrdenesAdapter(
         ) { _, _ ->
 
             this.ordenes.codigo_orden_trabajo = codigo.text.toString()
-            this.ordenes.tipo_orden_trabajo = tipo.toString()
-            this.ordenes.cliente = cliente.toString()
-            this.ordenes.sucursal = sucursal.toString()
+           // this.ordenes.tipo_orden_trabajo = tipo.toString()
+            //this.ordenes.cliente = cliente.toString()
+            //this.ordenes.sucursal = sucursal.toString()
             this.ordenes.persona_encargada = persona.text.toString()
-            this.ordenes.tecnico = tecnico.toString()
+            //this.ordenes.tecnico = tecnico.toString()
             this.ordenes.observaciones = observaciones.text.toString()
-            this.ordenes.fecha_orden_trabajo = fecha_ot.text.toString()
-            this.ordenes.equipo = equipo.text.toString()
-            this.ordenes.marca = marca.toString()
+            //this.ordenes.fecha_orden_trabajo = fecha_ot.text.toString()
+            //this.ordenes.equipo = equipo.toString()
+            //this.ordenes.marca = marca.toString()
             this.ordenes.estado_equipo = estado.text.toString()
+            this.ordenes.horometro = horometro.text.toString()
             this.ordenes.hora_inicio = horaI.text.toString()
             this.ordenes.hora_finalizacion = horaF.text.toString()
             this.ordenes.voltaje = voltaje.text.toString()
@@ -483,16 +607,8 @@ class OrdenesAdapter(
 
             }
 
-            if (TextUtils.isEmpty(codigo.toString()) && TextUtils.isEmpty(tipo.toString()) && TextUtils.isEmpty(
-                    cliente.toString()
-                ) && TextUtils.isEmpty(sucursal.toString()) && TextUtils.isEmpty(persona.toString()) && TextUtils.isEmpty(
-                    tecnico.toString()
-                ) && TextUtils.isEmpty(
-                    observaciones.toString()
-                ) &&
-                TextUtils.isEmpty(fecha_ot.toString()) && TextUtils.isEmpty(equipo.toString()) && TextUtils.isEmpty(
-                    marca.toString()
-                ) && TextUtils.isEmpty(estado.toString()) && TextUtils.isEmpty(horaI.toString()) && TextUtils.isEmpty(
+            if (TextUtils.isEmpty(codigo.toString()) && TextUtils.isEmpty(observaciones.toString()) &&
+            TextUtils.isEmpty(estado.toString()) && TextUtils.isEmpty(horaI.toString()) && TextUtils.isEmpty(
                     horaF.toString()
                 ) && TextUtils.isEmpty(voltaje.toString()) &&
                 TextUtils.isEmpty(amperaje.toString()) && TextUtils.isEmpty(clavija.toString()) && TextUtils.isEmpty(
@@ -515,7 +631,6 @@ class OrdenesAdapter(
                         Thread { toast(R.string.Ordenes) }.start()
                             obtenerOrdenes()
                             limpiarObjeto()
-
                     }
                     else{
                         Thread { toast(R.string.OrdenesError) }.start()
@@ -545,6 +660,7 @@ class OrdenesAdapter(
             }
 
         }
+
 
         //si se cancela ...
 
@@ -674,6 +790,7 @@ class OrdenesAdapter(
         this.ordenes.equipo= ""
         this.ordenes.marca= ""
         this.ordenes.estado_equipo= ""
+        this.ordenes.horometro= ""
         this.ordenes.hora_inicio= ""
         this.ordenes.hora_finalizacion= ""
         this.ordenes.voltaje= ""
@@ -782,7 +899,31 @@ class OrdenesAdapter(
 
         val obField: EditText = subView.findViewById(R.id.etObservaciones)
         val feField: EditText = subView.findViewById(R.id.etFecha_ot)
-        val equField: EditText = subView.findViewById(R.id.etEquipo)
+
+
+        equipos = subView.findViewById(R.id.etEquipo) as Spinner
+
+        val adapter1 =
+            ArrayAdapter.createFromResource(context, R.array.equipos, android.R.layout.simple_spinner_item)
+        adapter1.setDropDownViewResource(android.R.layout.preference_category)
+        equipos.adapter = adapter1
+
+        var equField:String? = null
+
+        equipos.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                equField = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
 
         marcas = subView.findViewById(R.id.etMarca) as Spinner
         marcas.adapter = ArrayAdapter(context, android.R.layout.preference_category, listaMarcas.map { it.marca })
@@ -832,7 +973,7 @@ class OrdenesAdapter(
         tecField.toString()
         obField.setText(ordenes.observaciones)
         feField.setText(ordenes.fecha_orden_trabajo)
-        equField.setText(ordenes.equipo)
+        equField.toString()
         marField.toString()
         estField.setText(ordenes.estado_equipo)
         hriField.setText(ordenes.hora_inicio)
@@ -857,7 +998,7 @@ class OrdenesAdapter(
     }
 
 
-    private fun addRTaskDialog(codigoOrden: String){
+    private fun addRTaskDialog(ordenes: Ordenes){
 
         val inflater = LayoutInflater.from(context)
         val subView = inflater.inflate(R.layout.item_formulario_repuestos, null)
@@ -882,21 +1023,21 @@ class OrdenesAdapter(
         ) { _, _ ->
 
             this.repuestos.cantidad = cantidad.text.toString()
-            this.repuestos.orden_trabajo = codigoOrden
+            this.repuestos.orden_trabajo = ordenes.codigo_orden_trabajo
             this.repuestos.repuestos_sugeridos_tecnico = repuestos_sugeridos_tecnico.text.toString()
 
             CoroutineScope(Dispatchers.IO).launch {
                 val call = RetrofitClient.webService.agregarRepuestos(repuestos)
 
                 repuestos.cantidad = cantidad1.text.toString()
-                repuestos.orden_trabajo = codigoOrden
+                repuestos.orden_trabajo = ordenes.codigo_orden_trabajo
                 repuestos.repuestos_sugeridos_tecnico = repuestos_sugeridos_tecnico1.text.toString()
 
 
                 val call1 = RetrofitClient.webService.agregarRepuestos(repuestos)
 
                 repuestos.cantidad = cantidad2.text.toString()
-                repuestos.orden_trabajo = codigoOrden
+                repuestos.orden_trabajo = ordenes.codigo_orden_trabajo
                 repuestos.repuestos_sugeridos_tecnico = repuestos_sugeridos_tecnico2.text.toString()
 
 
@@ -937,7 +1078,7 @@ class OrdenesAdapter(
     }
 
 
-    private fun addDetalleDialog(codigoOrden: String){
+    private fun addDetalleDialog(ordenes: Ordenes){
 
         val inflater = LayoutInflater.from(context)
         val subView = inflater.inflate(R.layout.item_formulario_detalle, null)
@@ -1018,7 +1159,7 @@ class OrdenesAdapter(
 
         builder.setPositiveButton("AGREGAR") { _, _ ->
 
-            this.detalles.orden_trabajo = codigoOrden
+            this.detalles.orden_trabajo = ordenes.codigo_orden_trabajo
             this.detalles.estado_chasis = etEstadoChasis.text.toString()
             this.detalles.estado_cubiertas = etEstadoCubiertas.text.toString()
             this.detalles.pintura = etPintura.text.toString()
@@ -1119,11 +1260,102 @@ class OrdenesAdapter(
 
         }
 
+
+    private fun addRepuInstaTaskDialog(ordenes: Ordenes){
+
+        val inflater = LayoutInflater.from(context)
+        val subView = inflater.inflate(R.layout.item_formulario_repuestos, null)
+
+        //val orden: TextView = subView.findViewById(R.id.etOrden)
+        val cantidad: EditText = subView.findViewById(R.id.etCantidad)
+        val repuestos_instalados_tecnico: EditText = subView.findViewById(R.id.etRepuesto)
+        val cantidad1: EditText = subView.findViewById(R.id.etCantidad1)
+        val repuestos_instalados_tecnico1: EditText = subView.findViewById(R.id.etRepuesto1)
+        val cantidad2: EditText = subView.findViewById(R.id.etCantidad2)
+        val repuestos_instalados_tecnico2: EditText = subView.findViewById(R.id.etRepuesto2)
+
+        //Realizamos la misma operacion que al crear una orden
+
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Añadir Repuesto")
+        builder.setView(subView)
+        builder.create()
+
+        builder.setPositiveButton(
+            "AGREGAR"
+        ) { _, _ ->
+
+            this.repuestosInstalados.cantidad = cantidad.text.toString()
+            this.repuestosInstalados.orden_trabajo = ordenes.codigo_orden_trabajo
+            this.repuestosInstalados.nombre = repuestos_instalados_tecnico.text.toString()
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val call = RetrofitClient.webService.agregarRepuestosInstalados(repuestosInstalados)
+
+                repuestosInstalados.cantidad = cantidad1.text.toString()
+                repuestosInstalados.orden_trabajo = ordenes.codigo_orden_trabajo
+                repuestosInstalados.nombre = repuestos_instalados_tecnico1.text.toString()
+
+
+                val call1 = RetrofitClient.webService.agregarRepuestosInstalados(repuestosInstalados)
+
+                repuestosInstalados.cantidad = cantidad2.text.toString()
+                repuestosInstalados.orden_trabajo = ordenes.codigo_orden_trabajo
+                repuestosInstalados.nombre = repuestos_instalados_tecnico2.text.toString()
+
+
+                val call2 = RetrofitClient.webService.agregarRepuestosInstalados(repuestosInstalados)
+
+                if (call.isSuccessful || call1.isSuccessful || call2.isSuccessful) {
+
+                    Thread { toast(R.string.Repuestos) }.start()
+                    obtenerOrdenes()
+                    limpiarObjeto()
+
+                } else {
+                    Thread { toast(R.string.RepuestosError) }.start()
+                }
+            }
+
+        }
+
+        builder.setNegativeButton("CANCELAR") { _, _ -> Toast.makeText(context, "Tarea Cancelada",
+            Toast.LENGTH_LONG).show()}
+
+
+        val alertDialog = builder.show()
+
+        val positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE)
+        /*positiveButton.setBackgroundColor(ContextCompat.getColor(this,
+            R.color.md_theme_light_primary
+        ))*/
+        positiveButton.setTextColor(ContextCompat.getColor(context,android.R.color.black))
+
+        val negativeButton = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+        /*negativeButton.setBackgroundColor(ContextCompat.getColor(this,
+            R.color.md_theme_light_primary
+        ))*/
+        negativeButton.setTextColor(ContextCompat.getColor(context,android.R.color.black))
+
+
+    }
+
+    override fun onQueryTextSubmit(s: String): Boolean {
+        return false
+    }
+
+    override fun onQueryTextChange(s: String): Boolean {
+        adaptador.filtrado(s)
+
+        return false
+    }
+
     fun filtrado(txtBuscar: String) {
         val longitud = txtBuscar.length
         if (longitud == 0) {
             listaOrdenes.clear()
             listaOrdenes.addAll(listaOriginal)
+        obtenerOrdenes()
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 val collecion: List<Ordenes> = listaOrdenes.stream()
@@ -1134,12 +1366,14 @@ class OrdenesAdapter(
                     .collect(Collectors.toList())
                 listaOrdenes.clear()
                 listaOrdenes.addAll(collecion)
+                obtenerOrdenes()
             } else {
                 for (c in listaOriginal) {
                     if (c.codigo_orden_trabajo.lowercase()
                             .contains(txtBuscar.lowercase(Locale.getDefault()))
                     ) {
                         listaOrdenes.add(c)
+                        obtenerOrdenes()
                     }
                 }
             }
