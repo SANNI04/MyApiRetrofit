@@ -60,7 +60,7 @@ class OrdenesAdapter(
         listaOriginal.addAll(listaOrdenes)
     }
 
-    var ordenes = Ordenes(-1,"","","","","","","","","","","","","","","","","","","","")
+    var ordenes = Ordenes(-1,"","","","","","","","","","","","","","","","","","","","","")
 
     lateinit var binding: ActivityMainBinding
     private lateinit var mSig: CaptureBitmapView
@@ -100,6 +100,9 @@ class OrdenesAdapter(
     lateinit var  modelos : Spinner
     var listaModelos = arrayListOf<Modelos>()
 
+    lateinit var  series : Spinner
+    var listaSeries = arrayListOf<Series>()
+
     lateinit var txtBuscar:SearchView
 
 
@@ -127,7 +130,7 @@ class OrdenesAdapter(
 
         holder.codigo_orden_trabajo.text = ordenes.codigo_orden_trabajo
         holder.tipo_orden_trabajo.text = ordenes.tipo_orden_trabajo
-        holder.cliente.text = ordenes.cliente
+        holder.cliente.text = ordenes.nombre_cliente
         holder.sucursal.text = ordenes.sucursal
         holder.persona_encargada.text = ordenes.persona_encargada
         holder.tecnico.text = ordenes.tecnico
@@ -196,6 +199,7 @@ class OrdenesAdapter(
         obtenerTecnicos()
         obtenerModelos()
         obtenerMarcas()
+        obtenerSeries()
 
     }
 
@@ -472,7 +476,24 @@ class OrdenesAdapter(
             }
         }
 
-        val serie: EditText = subView.findViewById(R.id.etSerie)
+        series= subView.findViewById(R.id.etSerie) as Spinner
+
+        val adaptador7 = ArrayAdapter(context, android.R.layout.simple_spinner_item, listaSeries.map { it.serie })
+        adaptador6.setDropDownViewResource(android.R.layout.preference_category)
+        series.adapter = adaptador7
+
+        var serie:String? = null
+
+        series.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                serie = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                TODO("Not yet implemented")
+            }
+        }
+        //val serie: EditText = subView.findViewById(R.id.etSerie)
         val firmacampo: LinearLayout =subView.findViewById(R.id.etFirma)
         val firma1 : ImageView = subView.findViewById(R.id.FirmaC)
 
@@ -555,7 +576,14 @@ class OrdenesAdapter(
         val positionmod = adaptador6.getPosition(modelo1)
         modelos.setSelection(positionmod)
 
-        serie.setText(ordenes.serie)
+        series = subView.findViewById(R.id.etSerie) as Spinner
+        adaptador7.setDropDownViewResource(android.R.layout.preference_category)
+        series.adapter = adaptador7
+        val serie1: String = ordenes.serie
+        val positionser = adaptador7.getPosition(serie1)
+        series.setSelection(positionser)
+
+        //serie.setText(ordenes.serie)
 
         val encodedImage = ordenes.firma_cliente
 
@@ -598,7 +626,7 @@ class OrdenesAdapter(
             this.ordenes.amperaje = amperaje.text.toString()
             this.ordenes.clavija = clavija.text.toString()
             this.ordenes.modelo = modelo.toString()
-            this.ordenes.serie = serie.text.toString()
+            this.ordenes.serie = serie.toString()
 
             if (mSig.touchEventOcurre) {
                 this.ordenes.firma_cliente = mSig.getBytes(firmacampo).toString()
@@ -759,6 +787,19 @@ class OrdenesAdapter(
 
             if(call.isSuccessful){
                 listaModelos = call.body()!!.listaModelos
+            }else{
+                Toast.makeText(context,"Error",Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
+
+    fun obtenerSeries(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = RetrofitClient.webService.obtenerSeries()
+
+            if(call.isSuccessful){
+                listaSeries = call.body()!!.listaSeries
             }else{
                 Toast.makeText(context,"Error",Toast.LENGTH_SHORT).show()
             }
@@ -962,7 +1003,21 @@ class OrdenesAdapter(
             }
         }
 
-        val serField: EditText = subView.findViewById(R.id.etSerie)
+        series = subView.findViewById(R.id.etSerie) as Spinner
+        series.adapter = ArrayAdapter(context, android.R.layout.preference_category, listaSeries.map { it.serie })
+
+        var serField:String? = null
+
+        series.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                serField = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                TODO("Not yet implemented")
+            }
+        }
+        //val serField: EditText = subView.findViewById(R.id.etSerie)
         val firma1: ImageView =subView.findViewById(R.id.FirmaC)
 
         codigoField.setText(ordenes.codigo_orden_trabajo)
@@ -982,7 +1037,7 @@ class OrdenesAdapter(
         ampField.setText(ordenes.amperaje)
         claField.setText(ordenes.clavija)
         modField.toString()
-        serField.setText(ordenes.serie)
+        serField.toString()
 
         val encodedImage = ordenes.firma_cliente
 

@@ -78,7 +78,8 @@
                     android:maxLines="1"
                     android:padding="20dp"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <Spinner
                     android:id="@+id/etTipo"
@@ -317,7 +318,7 @@
                     android:padding="12dp"
                     android:textSize="12sp" />
 
-                <EditText
+                <Spinner
                     android:id="@+id/etSerie"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

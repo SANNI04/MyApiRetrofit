@@ -85,6 +85,9 @@ interface WebService {
     @GET("ApiRestImaq/marcas/read")
     suspend fun  obtenerMarcas(): Response<MarcasResponse>
 
+    @GET("ApiRestImaq/series/read")
+    suspend fun  obtenerSeries(): Response<SeriesResponse>
+
     @POST("ApiRestImaq/repuestosInstalados/create")
     suspend fun agregarRepuestosInstalados(
         @Body repuestosinstalados: RepuestosInstalados

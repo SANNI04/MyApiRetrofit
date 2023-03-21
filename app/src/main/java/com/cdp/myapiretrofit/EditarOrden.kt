@@ -18,7 +18,7 @@ class EditarOrden  : AppCompatActivity() {
 
     lateinit var context: Context
     lateinit var listaOrdenes: ArrayList<Ordenes>
-    var ordenes = Ordenes(-1,"", "","","","","","","","","","","","","","","","","","","")
+    var ordenes = Ordenes(-1,"", "","","","","","","","","","","","","","","","","","","","")
     private lateinit var mSig: CaptureBitmapView
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -23,5 +23,6 @@ data class Ordenes(
    var clavija: String,
    var modelo: String,
    var serie: String,
-   var firma_cliente: String
+   var firma_cliente: String,
+   var nombre_cliente: String
  )

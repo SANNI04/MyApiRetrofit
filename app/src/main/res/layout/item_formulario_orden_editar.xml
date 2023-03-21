@@ -220,7 +220,7 @@
                     android:padding="12dp"
                     android:textSize="12sp" />
 
-                <EditText
+                <Spinner
                     android:id="@+id/etSerie"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

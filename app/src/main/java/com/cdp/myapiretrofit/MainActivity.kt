@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     var listaOrdenes = arrayListOf<Ordenes>()
 
-    var ordenes = Ordenes(-1, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
+    var ordenes = Ordenes(-1, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
 
     private val TAG = "MainActivity()"
 
@@ -68,6 +68,9 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     lateinit var  modelos : Spinner
     var listaModelos = arrayListOf<Modelos>()
+
+    lateinit var  series : Spinner
+    var listaSeries = arrayListOf<Series>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,6 +116,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         obtenerTecnicos()
         obtenerMarcas()
         obtenerModelos()
+        obtenerSeries()
 
     }
 
@@ -180,11 +184,12 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         cliente.setSelection(13)
 
-        var cliField:String? = null
+        var cliField: Int = -1
 
         cliente.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                cliField = parent.getItemAtPosition(position) as String
+                val clienteSeleccionado = listaClientes[position]
+                cliField = clienteSeleccionado.index_id
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -383,7 +388,31 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             }
         }
 
-        val serField: EditText = subView.findViewById(R.id.etSerie)
+        series= subView.findViewById(R.id.etSerie) as Spinner
+
+        series.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaSeries.map{ it.serie })
+        adapter.setDropDownViewResource(android.R.layout.preference_category)
+
+        series.setSelection(226)
+
+        var serField : String? = null
+
+        series.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                serField = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+       // val serField: EditText = subView.findViewById(R.id.etSerie)
         val firma1: LinearLayout = subView.findViewById(R.id.etFirma)
         //mSig.getBitmap()
         //val firField: LinearLayout = subView.findViewById(R.id.Firma)
@@ -419,7 +448,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             this.ordenes.amperaje = ampField.text.toString()
             this.ordenes.clavija = claField.text.toString()
             this.ordenes.modelo = modField.toString()
-            this.ordenes.serie = serField.text.toString()
+            this.ordenes.serie = serField.toString()
             this.ordenes.firma_cliente = mSig.getBytes(firma1).toString()
             //this.ordenes.firma_cliente = mSig.getBytes().toString()
 
@@ -620,6 +649,20 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             runOnUiThread{
                 if(call.isSuccessful){
                     listaModelos = call.body()!!.listaModelos
+                }else{
+                    Toast.makeText(this@MainActivity, "Error consultar todos", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
+    fun obtenerSeries(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = RetrofitClient.webService.obtenerSeries()
+            runOnUiThread{
+                if(call.isSuccessful){
+                    listaSeries = call.body()!!.listaSeries
                 }else{
                     Toast.makeText(this@MainActivity, "Error consultar todos", Toast.LENGTH_SHORT)
                         .show()
